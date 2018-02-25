@@ -1,8 +1,11 @@
+// Estimate Pi using Monte Carlo method.
+
 #include <mpi.h>
 #include <iostream>
 #include <random>
 #include <ctime>
 #include <chrono>
+
 using namespace std;
 
 void Simulate(const long long times, long long& hitCount)

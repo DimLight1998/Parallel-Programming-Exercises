@@ -1,6 +1,8 @@
+// Global sum computation using tree structure.
+
 #include <iostream>
 #include <mpi.h>
-#include <time.h>
+#include <ctime>
 
 using namespace std;
 

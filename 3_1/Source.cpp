@@ -1,3 +1,5 @@
+// Count numbers in some intervals.
+
 #include <fstream>
 #include <mpi.h>
 
