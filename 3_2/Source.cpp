@@ -18,13 +18,14 @@ void Simulate(const long long times, long long& hitCount)
 
 int main()
 {
-    srand(time(nullptr));
     MPI_Init(nullptr, nullptr);
 
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     int size;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    srand(static_cast<unsigned>(time(nullptr)) + rank);
 
     if (rank == 0)
     {
