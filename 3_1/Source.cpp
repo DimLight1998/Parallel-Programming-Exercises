@@ -43,19 +43,15 @@ int main(int argc, char** argv)
         GetCounts(localData, sizeEach, counts, 20);
 
         // Receive results from slaves.
-        const auto countsBuffer = new int[20];
-        for (auto i = 0; i < size - 1; i++)
-        {
-            MPI_Recv(countsBuffer, 20, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            for (auto j = 0; j < 20; j++) counts[j] += countsBuffer[j];
-        }
+        const auto countTotal = new int[20];
+        MPI_Reduce(counts, countTotal, 20, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
 
         // Report result.
         for (auto i = 0; i < 20; i++)
-            printf("Number of data in interval [%d, %d): %d\n", i * 5, (i + 1) * 5, counts[i]);
+            printf("Number of data in interval [%d, %d): %d\n", i * 5, (i + 1) * 5, countTotal[i]);
 
         // Clean up.
-        delete[] countsBuffer;
+        delete[] countTotal;
         delete[] counts;
         delete[] localData;
         delete[] data;
@@ -75,7 +71,7 @@ int main(int argc, char** argv)
         GetCounts(localData, sizeEach, counts, 20);
 
         // Send result to master.
-        MPI_Send(counts, 20, MPI_INT, 0, 0, MPI_COMM_WORLD);
+        MPI_Reduce(counts, counts, 20, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
 
         // Clean up.
         delete[] counts;
