@@ -1,3 +1,5 @@
+// Time cost test of communication.
+
 #include <mpi.h>
 #include <iostream>
 #include <ctime>
